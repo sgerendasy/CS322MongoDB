@@ -19,11 +19,49 @@
 
    <!-- Our own style sheet -->
    <link rel="stylesheet" href="/static/css/memos.css" />
-
-
 </head>
 <body>
+
+<table>
+  <tr>
+    <th style="padding:0 100px 0 100px;">
+      <h1>Memos</h1>
+      </th>
+      <th style="padding:0 15px 0 15px;">
+      <form>
+      <input type="button" value="Delete Memo" id="delete">
+      </form></th>
+
+      <th style="padding:0 15px 0 15px;">
+      <form action="addMemoPage">
+      <input type="submit" value="Add Memo" id="add">
+      </form>
+      </th>
+    </tr>
+</table>
+
 <div class="container">
+
+<script type="text/javascript">
+  console.log("Starting in index");
+
+  $("#delete").click(function(event) {
+      var checkedString = ""
+      var entries = memos.getElementsByTagName('input');
+      for(i = 0; i < entries.length; i++){
+        if(entries[i].checked){
+          checkedString += (entries[i].id) + ","
+        }
+      }
+      $.getJSON("/deleteMemo", { checked: checkedString }, function(data) { 
+        var worked = data.result;
+        if(worked["Why"] == "Need"){
+            window.location.reload(true);  
+        }
+      } );
+      
+  });
+</script>
 
 <!-- Flashed messages before content -->
 {% with messages = get_flashed_messages() %}
@@ -36,17 +74,20 @@
   {% endif %}
 {% endwith %}
 
-<h1>Memos</h1>
 
+<form name="memos" id="memosForm">
 {% if g.memos %}
     {% for memo in g.memos %}
   <div class="memo">
   <div class="row">
   <div class="col-md-2">
+    &nbsp
+    <input type="checkbox"  id='{{loop.index}}'>
+    &nbsp
     {{ memo.date | humanize }}
   </div>
   <div class="col-md-10">
-    {{ memo.text }}
+      {{ memo.text }}
   </div>
   </div> <!-- row -->
   </div> <!-- memo -->
@@ -54,7 +95,7 @@
 {% else %}
   <p>No memos for you. </p>  
 {% endif %}
-
+</form>
  
 
 </div> <!-- container -->

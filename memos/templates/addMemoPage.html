@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Memos</title>
+
+  <!-- 'viewport' is used by bootstrap to respond to device size -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Javascript:  JQuery from a content distribution network (CDN) -->
+  <script
+     src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+  </script>
+
+  <!-- Bootstrap includes javascript and css  (must follow jquery) -->
+  <link rel="stylesheet"
+   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+   <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
+	</script>
+
+
+</head>
+<body>
+<h5 style="padding:0 100px 0 100px;"> Date (YYYY-MM-DD)</h5>
+<form style="padding:0 100px 0 100px;">
+<input type="date" id="date"><br>
+</form>
+<h5 style="padding:0 100px 0 100px;"> Memo </h5>
+<form style="padding:0 100px 0 100px;">
+<textarea rows="4" cols="50" id="text" ></textarea><br>
+</form>
+<table>
+	<tr>
+	<th style="padding:0 100px 0 100px;">
+	<form>
+	<input type="button" value="Add Memo" id="add">
+	</form>
+	</th>
+	<th style="padding:0 30px 0 30px;">
+	<form action="index">
+	<input type="submit" value="View Memos" id="returnToIndex	">
+	</form>
+	</th>
+	</tr>
+ </table>
+
+<script>
+	$("#add").click(function(event) {
+
+	console.log("Clicked add");
+	//clear textbox and datetime
+	var date = $("#date").val();
+	var memo = $("#text").val();
+	console.log("Date: " + date + "\nmemo: "+ memo);
+	$.getJSON("/addMemo", { date: date, memo: memo }, 
+	        function(data) { 
+	        	var worked = data.result;
+	        	if(worked["Why"] == "Need"){
+	        				$("#date").val("");
+							$("#text").val("");
+	        	}
+	        	else{
+	        		console.log("Invalid format!");
+	        	}
+	        } 
+	     );
+
+
+	});
+</script>
+
+
+
+</body>
+</html>

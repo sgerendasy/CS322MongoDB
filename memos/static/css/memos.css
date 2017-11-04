@@ -13,3 +13,8 @@
 .attribution  {
     font-size: smaller;
 }
+
+.memo {
+    border-style: groove;
+    border-width: 1px;
+}
