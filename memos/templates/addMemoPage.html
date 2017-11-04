@@ -54,7 +54,7 @@
 	$.getJSON("/addMemo", { date: date, memo: memo }, 
 	        function(data) { 
 	        	var worked = data.result;
-	        	if(worked["Why"] == "Need"){
+	        	if(worked["Status"] == "Worked"){
 	        				$("#date").val("");
 							$("#text").val("");
 	        	}
