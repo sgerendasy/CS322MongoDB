@@ -18,7 +18,10 @@ from dateutil import tz  # For interpreting local times
 from pymongo import MongoClient
 
 import config
-CONFIG = config.configuration()
+if __name__ == "__main__":
+        CONFIG = config.configuration()
+else:
+        CONFIG = config.configuration(proxied=True)
 
 MONGO_CLIENT_URL = "mongodb://{}:{}@{}:{}/{}".format(
     CONFIG.DB_USER,
@@ -34,6 +37,7 @@ print("Using URL '{}'".format(MONGO_CLIENT_URL))
 ###
 # Globals
 ###
+
 
 app = flask.Flask(__name__)
 app.secret_key = CONFIG.SECRET_KEY
@@ -149,6 +153,8 @@ def humanize_arrow_date(date):
             human = then.humanize(now)
             if human == "in a day":
                 human = "Tomorrow"
+            elif human == "a day ago":
+                human = "Yesterday"
     except:
         human = date
     return human
@@ -174,7 +180,6 @@ def get_memos():
     # sort-list-of-dictionaries-by-date-in-python-3-4
     records = sorted(records, key=lambda k: k["date"])
     return records
-
 
 if __name__ == "__main__":
     app.debug = CONFIG.DEBUG

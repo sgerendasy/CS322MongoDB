@@ -18,7 +18,7 @@ MONGO_ADMIN_URL = "mongodb://{}:{}@{}:{}/admin".format(
     CONFIG.DB_HOST, 
     CONFIG.DB_PORT)
 
-try: 
+try:
     dbclient = MongoClient(MONGO_ADMIN_URL)
     db = getattr(dbclient, CONFIG.DB)
     print("Got database {}".format(CONFIG.DB))
