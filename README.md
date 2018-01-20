@@ -1,5 +1,5 @@
 ## Project 6 Mongo Memos
-A memo-holding machine.
+A simple memo holder. Memos are stored using MongoDB. 
 Author: Sam Gerendasy
 
 
