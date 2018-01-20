@@ -29,7 +29,8 @@ install:  env  credentials
 #
 credentials:  memos/credentials.ini
 memos/credentials.ini:
-	echo "You just install the database and credentials.ini for it"
+	echo "You must have a valid file memos/credentials.ini and MongoDB."
+	echo "Fill template credentials-skeleton.ini and rename"
 
 run:	env credentials
 	$(INVENV) cd memos; python3 flask_main.py
